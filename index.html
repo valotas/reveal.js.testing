@@ -136,15 +136,9 @@
           <section>
             <h4>BDD</h4>
             <pre><code data-trim>
-describe('Array', function(){
-  before(function(){
-    // ...
-  });
-
-  describe('#indexOf()', function(){
-    it('should return -1 when not present', function(){
-      [1,2,3].indexOf(4).should.equal(-1);
-    });
+describe('Mocha', function(){
+  it('can be used of bdd', function(){
+    [1,2,3].indexOf(4).should.equal(-1);
   });
 });
             </code></pre>
@@ -153,15 +147,9 @@ describe('Array', function(){
           <section>
             <h4>TDD</h4>
             <pre><code data-trim>
-suite('Array', function(){
-  setup(function(){
-    // ...
-  });
-
-  suite('#indexOf()', function(){
-    test('should return -1 when not present', function(){
-      assert.equal(-1, [1,2,3].indexOf(4));
-    });
+suite('Mocha suite', function(){
+  test('can be used for tdd', function(){
+    assert.equal(-1, [1,2,3].indexOf(4));
   });
 });
             </code></pre>
@@ -181,8 +169,66 @@ suite('Array', function(){
 
           <section>
             <h3>Assertions</h3>
-            <p>Anything you like</p>
-            <p>Most of the people are using <strong>chai.js</strong></p>
+            <span class="fragment fade-out" data-fragment-index=1><a href="https://github.com/Jxck/assert">assert.js</a></span>
+            <span class="fragment fade-out" data-fragment-index=1> | <a href="https://github.com/tj/should.js">should.js</a>| </span>
+            <span><a href="http://chaijs.com/">chai.js</a></span>
+            <span class="fragment fade-out" data-fragment-index=1>| <a href="https://github.com/Automattic/expect.js">expect.js</a></span>
+          </section>
+
+          <section>
+            <h5>should</h5>
+            <pre><code data-trim>
+chai.should();
+
+foo.should.be.a('string');
+foo.should.equal('bar');
+foo.should.have.length(3);
+tea.should.have.property('flavors')
+  .with.length(3);
+            </code></pre>
+          </section>
+
+          <section>
+            <h5>assert</h5>
+            <pre><code data-trim>
+var assert = chai.assert;
+
+assert.typeOf(foo, 'string');
+assert.equal(foo, 'bar');
+assert.lengthOf(foo, 3)
+assert.property(tea, 'flavors');
+assert.lengthOf(tea.flavors, 3);
+            </code></pre>
+          </section>
+
+          <section>
+            <h5>expect</h5>
+            <pre><code data-trim>
+var expect = chai.expect;
+
+expect(foo).to.be.a('string');
+expect(foo).to.equal('bar');
+expect(foo).to.have.length(3);
+expect(tea).to.have.property('flavors')
+  .with.length(3);
+            </code></pre>
+          </section>
+
+          <section>
+            <h5>Can be combined with a webdriver</h5>
+            <pre><code data-trim>
+chai.use(chaiWebdriver(driver));
+driver.get('http://chaijs.com/');
+expect('nav h1').dom.to.contain.text('Chai');
+expect('#node .button').dom.to.have.style('float', 'left');
+            </code></pre>
+          </section>
+
+          <section>
+            <h3>Spies</h3>
+            <p><strong>sinons.js</strong> is your friend</p>
+            <p class="fragment">Provides a fake server to mock <code>XMLHttpRequest</code></p>
+            <p class="fragment">You have to learn the differencis between stub/mock</p>
           </section>
 
           <section>
@@ -195,7 +241,162 @@ suite('Array', function(){
         <section>
           <section>
             <h2>Jasmine</h2>
-            <p><a href="http://jasmine.github.io/2.0/introduction.html">http://jasmine.github.io/2.0/introduction.html</a></p>
+            <p><a href="http://jasmine.github.io/">http://jasmine.github.io/</a></p>
+            <p class="fragment">Run tests in browser</p>
+          </section>
+
+          <section>
+             <h4>BDD</h4>
+            <pre><code data-trim>
+describe("A jasmine suite", function() {
+  it("is for behavioural driven testing", function() {
+    expect(true).toBe(true);
+  });
+});
+            </code></pre>
+          </section>
+
+          <section>
+            <h3>Assertions</h3>
+            <pre><code data-trim>
+expect(a).toBe(true);
+expect(a).toEqual(12);
+expect(message).toMatch(/bar/);
+expect(a).toBeUndefined();
+expect(a).toBeNull();
+expect(foo).toBeTruthy();
+expect(a).toContain("bar");
+expect(e).toBeLessThan(pi);
+expect(pi).toBeGreaterThan(e);
+expect(pi).toBeCloseTo(e, 0);
+expect(bar).toThrow();
+            </code></pre>
+          </section>
+
+          <section>
+            <h4><code>.not</code></h4>
+            <pre><code data-trim>
+expect(a).not.toBe(true);
+expect(a).not.toEqual(12);
+expect(message).not.toMatch(/bar/);
+expect(a).not.toBeUndefined();
+expect(a).not.toBeNull();
+expect(foo).not.toBeTruthy();
+expect(a).not.toContain("bar");
+expect(e).not.toBeLessThan(pi);
+expect(pi).not.toBeGreaterThan(e);
+expect(pi).not.toBeCloseTo(e, 0);
+expect(bar).not.toThrow();
+            </code></pre>
+          </section>
+
+          <section>
+            <h3>Spies</h3>
+            <p>Provides a pretty good api for spies</p>
+            <p class="fragment">You do not have to learn the differencies between stub and/or mock</p>
+            <p class="fragment">Looks much more straight forward to work with</p>
+          </section>
+
+          <section>
+            <h4>Create a spy function</h4>
+            <pre><code data-trim>
+//given
+var spy = jasmine.createSpy('spy');
+
+//when
+spy('foo');
+
+//then
+expect(spy).toHaveBeenCalledWith('foo');
+expect(spy).not.toHaveBeenCalledWith('bar');
+            </code></pre>
+          </section>
+
+          <section>
+            <h4>Spy an existing object</h4>
+            <pre><code data-trim>
+//given
+spyOn(jQuery, 'ajax').and.callFake(function () {});
+
+//when
+$.ajax(...);
+
+//then
+expect(jQuery.ajax).toHaveBeenCalled();
+            </code></pre>
+          </section>
+
+          <section>
+            <h3>More goodies</h3>
+            <ul>
+              <li><code>jasmine.any</code></li>
+              <li><code>jasmine.objectContaining</code></li>
+            </ul>
+          </section>
+
+          <section>
+            <h4>Match anything with <code>jasmine.any</code></h4>
+            <pre><code data-trim>
+it("matches any value", function() {
+  expect({}).toEqual(jasmine.any(Object));
+  expect(12).toEqual(jasmine.any(Number));
+});
+            </code></pre>
+          </section>
+
+          <section>
+            <h4>Match something with <code>jasmine.objectContaining</code></h4>
+            <pre><code data-trim>
+it("matches objects with the expect key/value pairs", function() {
+  var foo = {
+    a: 1,
+    b: 2,
+    bar: "baz"
+  };
+  expect(foo).toEqual(jasmine.objectContaining({
+    bar: "baz"
+  }));
+  expect(foo).not.toEqual(jasmine.objectContaining({
+    c: 37
+  }));
+});
+            </code></pre>
+          </section>
+
+        </section>
+
+        <section>
+            <h2>Frameworks</h2>
+            <p class="fragment">What is that?</p>
+            <p class="fragment">Something that can fire a browser for you and run your tests</p>
+            <div class="fragment">
+              <p>Most popular</p>
+              <ul>
+                <li><a href="http://www.seleniumhq.org/">Selenium</a></li>
+                <li><a href="http://karma-runner.github.io/">Karma</a></li>
+              </ul>
+            </div>
+          </section>
+
+        <section>
+          <section>
+            <h2>Selenium</h2>
+            <p><a href="http://www.seleniumhq.org/">http://www.seleniumhq.org/</a></p>
+            <blockquote>&ldquo;Selenium automates browsers. That's it&rdquo;</blockquote>
+          </section>
+
+          <section>
+            <h3>Really?</h3>
+
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Karma</h2>
+            <p><a href="http://karma-runner.github.io/">http://karma-runner.github.io/</a></p>
+            <blockquote>&ldquo;On the AngularJS team, we rely on testing and we always seek better tools to make our life easier. That's why we created
+Karma - a <strong>test runner</strong> that fits all our needs&rdquo;</blockquote>
           </section>
         </section>
 
